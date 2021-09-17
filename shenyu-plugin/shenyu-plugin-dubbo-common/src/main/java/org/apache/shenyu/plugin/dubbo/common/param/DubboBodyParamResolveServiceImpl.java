@@ -20,6 +20,7 @@ package org.apache.shenyu.plugin.dubbo.common.param;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.shenyu.plugin.api.param.BodyParamResolveService;
 import org.apache.shenyu.plugin.api.utils.BodyParamUtils;
+import org.springframework.web.server.ServerWebExchange;
 
 /**
  * The type Default generic param resolve service.
@@ -27,7 +28,7 @@ import org.apache.shenyu.plugin.api.utils.BodyParamUtils;
 public class DubboBodyParamResolveServiceImpl implements BodyParamResolveService {
 
     @Override
-    public Pair<String[], Object[]> buildParameter(final String body, final String parameterTypes) {
+    public Pair<String[], Object[]> buildParameter(final String body, final String parameterTypes, final ServerWebExchange exchange) {
         return BodyParamUtils.buildParameters(body, parameterTypes);
     }
 }

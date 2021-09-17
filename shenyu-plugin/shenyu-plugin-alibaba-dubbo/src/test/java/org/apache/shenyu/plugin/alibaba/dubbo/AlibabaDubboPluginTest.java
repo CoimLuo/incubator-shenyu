@@ -67,7 +67,7 @@ public final class AlibabaDubboPluginTest {
         metaData.setServiceName("org.apache.shenyu.test.dubbo.api.service.DubboTestService");
         metaData.setMethodName("findAll");
         metaData.setRpcType(RpcTypeEnum.DUBBO.getName());
-        when(mockAlibabaDubboProxyService.genericInvoker(null, metaData)).thenReturn(Mono.empty());
+        when(mockAlibabaDubboProxyService.genericInvoker(null, metaData, null)).thenReturn(Mono.empty());
         alibabaDubboPluginUnderTest = new AlibabaDubboPlugin(mockAlibabaDubboProxyService);
     }
 

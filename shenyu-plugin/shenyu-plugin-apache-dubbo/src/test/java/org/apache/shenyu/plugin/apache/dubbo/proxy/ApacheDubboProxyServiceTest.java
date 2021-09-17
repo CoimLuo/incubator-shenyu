@@ -95,7 +95,7 @@ public final class ApacheDubboProxyServiceTest {
     static class BodyParamResolveServiceImpl implements BodyParamResolveService {
 
         @Override
-        public Pair<String[], Object[]> buildParameter(final String body, final String parameterTypes) {
+        public Pair<String[], Object[]> buildParameter(final String body, final String parameterTypes, final ServerWebExchange exchange) {
             return new ImmutablePair<>(LEFT, RIGHT);
         }
     }

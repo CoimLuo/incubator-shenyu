@@ -47,43 +47,43 @@ public final class SofaBodyParamResolveServiceTest {
     public void testBuildParameter() {
         String body = "{\"id\": \"12345\",\"name\": \"candyYu\"}";
         String parameterTypes = "org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.Student";
-        Pair<String[], Object[]> pair = impl.buildParameter(body, parameterTypes);
+        Pair<String[], Object[]> pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(1));
         assertThat(pair.getRight().length, is(1));
 
         body = "{\"testArray\":[{\"id\":\"123\",\"name\":\"candy\"},{\"id\":\"456\",\"name\":\"myth\"}]}";
         parameterTypes = "org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.Student[]";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(1));
         assertThat(pair.getRight().length, is(1));
 
         body = "{\"ids\":[\"123\",\"456\"],\"name\":\"hello world\"}\n";
         parameterTypes = "java.lang.Integer[],java.lang.String";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(2));
         assertThat(pair.getRight().length, is(2));
 
         body = "{\"idMaps\":{\"id2\":\"2\",\"id1\":\"1\"},\"name\":\"hello world\"}\n";
         parameterTypes = "java.util.HashMap,java.lang.String";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(2));
         assertThat(pair.getRight().length, is(2));
 
         body = "{\"dubboTest\":{\"id\":\"123\",\"name\":\"xiaoyu\"},\"idLists\":[\"456\",\"789\"],\"idMaps\":{\"id2\":\"2\",\"id1\":\"1\"}}";
         parameterTypes = "org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.ComplexBean";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(1));
         assertThat(pair.getRight().length, is(1));
 
         body = "{\"complexBeanTest\":{\"dubboTest\":{\"id\":\"123\",\"name\":\"xiaoyu\"},\"idLists\":[\"456\",\"789\"],\"idMaps\":{\"id2\":\"2\",\"id1\":\"1\"}},\"name\":\"xiaoyu\"}";
         parameterTypes = "org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.ComplexBean, java.lang.String";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(2));
         assertThat(pair.getRight().length, is(2));
 
         body = "{\"ids\":[\"123\",\"456\"],\"id\":123,\"name\":\"hello world\",\"testArray\":[{\"id\":\"123\",\"name\":\"candy\"},{\"id\":\"456\",\"name\":\"myth\"}]}\n";
         parameterTypes = "java.lang.Integer[],java.lang.Integer,java.lang.String,org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.Student[]";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(4));
         assertThat(pair.getRight().length, is(4));
 
@@ -93,7 +93,7 @@ public final class SofaBodyParamResolveServiceTest {
     public void testBuildParameterWithNull() {
         String body = "{\"student\":{\"id\":null,\"name\":null}}";
         String parameterTypes = "org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.Student";
-        Pair<String[], Object[]> pair = impl.buildParameter(body, parameterTypes);
+        Pair<String[], Object[]> pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(1));
         assertThat(pair.getRight().length, is(1));
         Map map = (Map) pair.getRight()[0];
@@ -103,7 +103,7 @@ public final class SofaBodyParamResolveServiceTest {
 
         body = "{\"students\":[{\"id\":null,\"name\":null}]}";
         parameterTypes = "org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.Student[]";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(1));
         assertThat(pair.getRight().length, is(1));
         map = (Map) pair.getRight()[0];
@@ -114,7 +114,7 @@ public final class SofaBodyParamResolveServiceTest {
 
         body = "{\"dubboTest\":{\"id\":null,\"name\":null},\"idLists\":[null,null],\"idMaps\":{\"id2\":null,\"id1\":null}}";
         parameterTypes = "org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.ComplexBean";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(1));
         assertThat(pair.getRight().length, is(1));
         map = (Map) pair.getRight()[0];
@@ -127,7 +127,7 @@ public final class SofaBodyParamResolveServiceTest {
 
         body = "{\"name\":null}";
         parameterTypes = "java.lang.String";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(1));
         assertThat(pair.getRight().length, is(1));
         assertNull(pair.getRight()[0]);

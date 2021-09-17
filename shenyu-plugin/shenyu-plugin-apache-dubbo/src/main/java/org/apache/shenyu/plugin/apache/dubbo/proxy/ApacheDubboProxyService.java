@@ -79,12 +79,12 @@ public class ApacheDubboProxyService {
             reference = ApplicationConfigCache.getInstance().initRef(metaData);
         }
         GenericService genericService = reference.get();
-        Pair<String[], Object[]> pair;
-        if (StringUtils.isBlank(metaData.getParameterTypes()) || ParamCheckUtils.dubboBodyIsEmpty(body)) {
-            pair = new ImmutablePair<>(new String[]{}, new Object[]{});
-        } else {
-            pair = bodyParamResolveService.buildParameter(body, metaData.getParameterTypes());
-        }
+        Pair<String[], Object[]> pair = bodyParamResolveService.buildParameter(body, metaData.getParameterTypes(), exchange);
+//        if (StringUtils.isBlank(metaData.getParameterTypes()) || ParamCheckUtils.dubboBodyIsEmpty(body)) {
+//            pair = new ImmutablePair<>(new String[]{}, new Object[]{});
+//        } else {
+//            pair = bodyParamResolveService.buildParameter(body, metaData.getParameterTypes());
+//        }
         //Compatible with asynchronous calls of lower Dubbo versions
         RpcContext.getContext().setAttachment(ASYNC_KEY, Boolean.TRUE.toString());
         Object data = genericService.$invoke(metaData.getMethodName(), pair.getLeft(), pair.getRight());

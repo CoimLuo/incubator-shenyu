@@ -29,6 +29,7 @@ import org.apache.shenyu.common.exception.ShenyuException;
 import org.apache.shenyu.common.utils.ParamCheckUtils;
 import org.apache.shenyu.plugin.alibaba.dubbo.cache.ApplicationConfigCache;
 import org.apache.shenyu.plugin.api.param.BodyParamResolveService;
+import org.springframework.web.server.ServerWebExchange;
 
 import java.util.Objects;
 
@@ -54,10 +55,11 @@ public class AlibabaDubboProxyService {
      *
      * @param body     the body
      * @param metaData the meta data
+     * @param exchange the exchange
      * @return the object
      * @throws ShenyuException the shenyu exception
      */
-    public Object genericInvoker(final String body, final MetaData metaData) throws ShenyuException {
+    public Object genericInvoker(final String body, final MetaData metaData, final ServerWebExchange exchange) throws ShenyuException {
         ReferenceConfig<GenericService> reference = ApplicationConfigCache.getInstance().get(metaData.getPath());
         if (Objects.isNull(reference) || StringUtils.isEmpty(reference.getInterface())) {
             ApplicationConfigCache.getInstance().invalidate(metaData.getPath());
@@ -69,7 +71,7 @@ public class AlibabaDubboProxyService {
             if (StringUtils.isBlank(metaData.getParameterTypes()) || ParamCheckUtils.dubboBodyIsEmpty(body)) {
                 pair = new ImmutablePair<>(new String[]{}, new Object[]{});
             } else {
-                pair = bodyParamResolveService.buildParameter(body, metaData.getParameterTypes());
+                pair = bodyParamResolveService.buildParameter(body, metaData.getParameterTypes(), exchange);
             }
             return genericService.$invoke(metaData.getMethodName(), pair.getLeft(), pair.getRight());
         } catch (GenericException e) {

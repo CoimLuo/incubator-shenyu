@@ -18,6 +18,7 @@
 package org.apache.shenyu.plugin.api.param;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.web.server.ServerWebExchange;
 
 /**
  * The interface Generic param service.
@@ -31,7 +32,8 @@ public interface BodyParamResolveService {
      *
      * @param body           the body
      * @param parameterTypes the parameter types
+     * @param exchange the ServerWebExchange
      * @return the pair
      */
-    Pair<String[], Object[]> buildParameter(String body, String parameterTypes);
+    Pair<String[], Object[]> buildParameter(String body, String parameterTypes, ServerWebExchange exchange);
 }

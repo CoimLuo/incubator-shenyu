@@ -37,6 +37,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockedStatic;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.web.server.ServerWebExchange;
 
 /**
  * AlibabaDubboProxyServiceTest.
@@ -81,14 +82,14 @@ public final class AlibabaDubboProxyServiceTest {
             when(applicationConfigCache.initRef(metaData)).thenReturn(referenceConfig);
 
             AlibabaDubboProxyService alibabaDubboProxyService = new AlibabaDubboProxyService(new BodyParamResolveServiceImpl());
-            Assert.assertNull(alibabaDubboProxyService.genericInvoker("", metaData));
+            Assert.assertNull(alibabaDubboProxyService.genericInvoker("", metaData, null));
         }
     }
 
     class BodyParamResolveServiceImpl implements BodyParamResolveService {
 
         @Override
-        public Pair<String[], Object[]> buildParameter(final String body, final String parameterTypes) {
+        public Pair<String[], Object[]> buildParameter(final String body, final String parameterTypes, final ServerWebExchange exchange) {
             return new ImmutablePair<>(LEFT, RIGHT);
         }
     }

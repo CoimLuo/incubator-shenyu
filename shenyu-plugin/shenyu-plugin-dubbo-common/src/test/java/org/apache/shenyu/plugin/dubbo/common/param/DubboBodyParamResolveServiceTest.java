@@ -43,7 +43,7 @@ public class DubboBodyParamResolveServiceTest {
     public void testBuildParameterWithNull() {
         String body = "{\"id\":null,\"name\":null}";
         String parameterTypes = "org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.Student";
-        Pair<String[], Object[]> pair = impl.buildParameter(body, parameterTypes);
+        Pair<String[], Object[]> pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(1));
         assertThat(pair.getRight().length, is(1));
         Map map = (Map) pair.getRight()[0];
@@ -52,7 +52,7 @@ public class DubboBodyParamResolveServiceTest {
         
         body = "{\"dubboTest\":{\"id\":null,\"name\":null},\"idLists\":[null,null],\"idMaps\":{\"id2\":null,\"id1\":null}}";
         parameterTypes = "org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.ComplexBean";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(1));
         assertThat(pair.getRight().length, is(1));
         map = (Map) pair.getRight()[0];
@@ -65,7 +65,7 @@ public class DubboBodyParamResolveServiceTest {
 
         body = "{\"complexBean\":{\"dubboTest\":{\"id\":null,\"name\":null},\"idLists\":[null,null],\"idMaps\":{\"id2\":null,\"id1\":null}},\"name\":null}";
         parameterTypes = "{\"complexBean\":\"org.apache.shenyu.web.rpc.DubboMultiParameterResolveServiceImplTest.ComplexBean\",\"name\":\"java.lang.String\"}";
-        pair = impl.buildParameter(body, parameterTypes);
+        pair = impl.buildParameter(body, parameterTypes, null);
         assertThat(pair.getLeft().length, is(2));
         assertThat(pair.getRight().length, is(2));
         map = (Map) pair.getRight()[0];

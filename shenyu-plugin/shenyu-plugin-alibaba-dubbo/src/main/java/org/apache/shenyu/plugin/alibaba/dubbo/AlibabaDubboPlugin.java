@@ -74,7 +74,7 @@ public class AlibabaDubboPlugin extends AbstractShenyuPlugin {
             Object error = ShenyuResultWrap.error(ShenyuResultEnum.DUBBO_HAVE_BODY_PARAM.getCode(), ShenyuResultEnum.DUBBO_HAVE_BODY_PARAM.getMsg(), null);
             return WebFluxResultUtils.result(exchange, error);
         }
-        Object result = alibabaDubboProxyService.genericInvoker(param, metaData);
+        Object result = alibabaDubboProxyService.genericInvoker(param, metaData, exchange);
         if (Objects.nonNull(result)) {
             exchange.getAttributes().put(Constants.RPC_RESULT, result);
         } else {

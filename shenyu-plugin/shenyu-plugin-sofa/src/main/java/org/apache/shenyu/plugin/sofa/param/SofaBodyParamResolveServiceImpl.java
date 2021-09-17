@@ -26,6 +26,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.shenyu.common.utils.GsonUtils;
 import org.apache.shenyu.plugin.api.param.BodyParamResolveService;
 import org.apache.shenyu.plugin.api.utils.BodyParamUtils;
+import org.springframework.web.server.ServerWebExchange;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -39,7 +40,7 @@ import java.util.stream.Collectors;
 public class SofaBodyParamResolveServiceImpl implements BodyParamResolveService {
 
     @Override
-    public Pair<String[], Object[]> buildParameter(final String body, final String parameterTypes) {
+    public Pair<String[], Object[]> buildParameter(final String body, final String parameterTypes, final ServerWebExchange exchange) {
         String[] parameterTypesAndGeneric = StringUtils.split(parameterTypes, "#");
         String[] parameters = StringUtils.split(parameterTypesAndGeneric[0], ",");
         if (isSingleCustomizeType(parameters)) {

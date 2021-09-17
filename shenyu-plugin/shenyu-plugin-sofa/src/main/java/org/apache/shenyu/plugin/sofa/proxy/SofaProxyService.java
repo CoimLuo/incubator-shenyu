@@ -77,7 +77,7 @@ public class SofaProxyService {
         if (StringUtils.isBlank(metaData.getParameterTypes()) || null == body || "".equals(body) || "{}".equals(body) || "null".equals(body)) {
             pair = new ImmutablePair<>(new String[]{}, new Object[]{});
         } else {
-            pair = bodyParamResolveService.buildParameter(body, metaData.getParameterTypes());
+            pair = bodyParamResolveService.buildParameter(body, metaData.getParameterTypes(), exchange);
         }
         CompletableFuture<Object> future = new CompletableFuture<>();
         RpcInvokeContext.getContext().setResponseCallback(new SofaResponseCallback<Object>() {
